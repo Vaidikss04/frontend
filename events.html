@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Browse Events — CampusEvents</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="brand">🎟️ CampusEvents</div>
+    <div class="nav-links">
+      <a href="user-dashboard.html">Dashboard</a>
+      <a href="events.html" class="active">Browse Events</a>
+      <a href="my-events.html">My Registrations</a>
+      <a onclick="logout()" style="cursor:pointer;">Logout</a>
+    </div>
+  </nav>
+
+  <div class="page">
+    <h1>Browse Events</h1>
+    <p style="color:var(--text-muted);">Search or filter to find something you're interested in.</p>
+
+    <div class="search-bar">
+      <input type="text" id="search-input" placeholder="Search by name or location...">
+      <select id="category-filter">
+        <option value="all">All Categories</option>
+        <option value="Technical">Technical</option>
+        <option value="Cultural">Cultural</option>
+        <option value="Sports">Sports</option>
+        <option value="Workshop">Workshop</option>
+      </select>
+    </div>
+
+    <div class="event-grid" id="events-grid"></div>
+  </div>
+
+  <script src="../js/auth.js"></script>
+  <script src="../js/events.js"></script>
+  <script src="../js/user.js"></script>
+  <script>
+    const session = requireRole('user');
+    if (session) loadAllEvents();
+  </script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Registrations — CampusEvents</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="brand">🎟️ CampusEvents</div>
+    <div class="nav-links">
+      <a href="user-dashboard.html">Dashboard</a>
+      <a href="events.html">Browse Events</a>
+      <a href="my-events.html" class="active">My Registrations</a>
+      <a onclick="logout()" style="cursor:pointer;">Logout</a>
+    </div>
+  </nav>
+
+  <div class="page">
+    <h1>My Registrations</h1>
+    <p style="color:var(--text-muted);">Events you've signed up for.</p>
+    <div class="event-grid" id="my-events-list"></div>
+  </div>
+
+  <script src="../js/auth.js"></script>
+  <script src="../js/events.js"></script>
+  <script src="../js/user.js"></script>
+  <script>
+    const session = requireRole('user');
+    if (session) loadMyRegistrations(session);
+  </script>
+</body>
+</html>
