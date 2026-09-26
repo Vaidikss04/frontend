@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manage Events — CampusEvents Admin</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/dashboard.css">
+</head>
+<body>
+
+  <div class="dash-wrap">
+    <div class="sidebar">
+      <div class="brand">🎟️ CampusEvents<br><small style="font-weight:400; opacity:0.7; font-size:12px;">Admin Panel</small></div>
+      <nav>
+        <a href="admin-dashboard.html">Dashboard</a>
+        <a href="manage-events.html" class="active">Manage Events</a>
+        <a href="add-event.html">Add Event</a>
+        <a href="users.html">Users</a>
+      </nav>
+      <a class="logout-link" onclick="logout()">Logout</a>
+    </div>
+
+    <div class="dash-main">
+      <div class="section-head">
+        <h1>Manage Events</h1>
+        <a href="add-event.html" class="btn btn-primary btn-small">+ Add Event</a>
+      </div>
+      <p style="color:var(--text-muted);">Edit details or remove events that are no longer running.</p>
+
+      <div class="card" id="edit-panel" style="display:none; padding:26px; margin-bottom:26px;">
+        <h3>Edit Event</h3>
+        <form id="edit-form" onsubmit="saveEditedEvent(event)">
+          <input type="hidden" id="edit-id">
+          <div class="form-group"><label>Title</label><input type="text" id="edit-title" required></div>
+          <div class="form-group"><label>Date</label><input type="date" id="edit-date" required></div>
+          <div class="form-group"><label>Location</label><input type="text" id="edit-location" required></div>
+          <div class="form-group">
+            <label>Category</label>
+            <select id="edit-category">
+              <option value="Technical">Technical</option>
+              <option value="Cultural">Cultural</option>
+              <option value="Sports">Sports</option>
+              <option value="Workshop">Workshop</option>
+            </select>
+          </div>
+          <div class="form-group"><label>Capacity</label><input type="number" id="edit-capacity" min="1" required></div>
+          <div class="form-group"><label>Description</label><textarea id="edit-description" rows="3" required></textarea></div>
+          <div style="display:flex; gap:10px;">
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+            <button type="button" class="btn btn-outline-dark" onclick="cancelEdit()">Cancel</button>
+          </div>
+        </form>
+      </div>
+
+      <table class="data-table">
+        <thead>
+          <tr><th>Title</th><th>Date</th><th>Location</th><th>Category</th><th>Registrations</th><th>Actions</th></tr>
+        </thead>
+        <tbody id="manage-events-table"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <script src="../js/auth.js"></script>
+  <script src="../js/events.js"></script>
+  <script src="../js/admin.js"></script>
+  <script>
+    const session = requireRole('admin');
+    if (session) loadManageEvents();
+  </script>
+</body>
+</html>

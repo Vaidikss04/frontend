@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard — Event Management System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">Campus<span>Events</span> <span style="font-size:0.7rem; color:#C9C8E8; font-weight:400;">· Admin</span></div>
+      <nav>
+        <a href="dashboard.html" class="active">Dashboard</a>
+        <a href="manage-events.html">Manage events</a>
+        <a href="users.html">Users</a>
+      </nav>
+      <button class="logout-btn" onclick="logoutUser()">Log out</button>
+    </aside>
+
+    <main class="main">
+      <div class="main-head">
+        <div>
+          <h1>Admin dashboard</h1>
+          <p>An overview of everything on the platform.</p>
+        </div>
+        <a href="manage-events.html" class="btn btn-primary">Add new event</a>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card"><strong id="totalEvents">0</strong><span>Total events</span></div>
+        <div class="stat-card"><strong id="totalUsers">0</strong><span>Registered students</span></div>
+        <div class="stat-card"><strong id="totalRegs">0</strong><span>Total registrations</span></div>
+      </div>
+
+      <h2 style="font-size:1.1rem; margin-bottom:16px;">Upcoming events</h2>
+      <div class="table-card">
+        <table>
+          <thead><tr><th>Title</th><th>Date</th><th>Location</th><th>Registrations</th></tr></thead>
+          <tbody id="eventRows"></tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+
+  <script src="../js/auth.js"></script>
+  <script src="../js/events.js"></script>
+  <script src="../js/admin.js"></script>
+  <script>
+    const admin = requireRole('admin');
+
+    function render() {
+      if (!admin) return;
+      const stats = getStats();
+      document.getElementById('totalEvents').textContent = stats.totalEvents;
+      document.getElementById('totalUsers').textContent = stats.totalUsers;
+      document.getElementById('totalRegs').textContent = stats.totalRegistrations;
+
+      const events = [...getEvents()].sort((a, b) => new Date(a.date) - new Date(b.date));
+      document.getElementById('eventRows').innerHTML = events.map(ev => `
+        <tr>
+          <td>${ev.title}</td>
+          <td>${formatDate(ev.date)}</td>
+          <td>${ev.location}</td>
+          <td>${getRegistrationCount(ev.id)}</td>
+        </tr>
+      `).join('') || '<tr><td colspan="4" style="text-align:center; color:var(--muted);">No events yet</td></tr>';
+    }
+
+    render();
+  </script>
+</body>
+</html>

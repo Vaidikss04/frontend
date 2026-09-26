@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard — CampusEvents</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/dashboard.css">
+</head>
+<body>
+
+  <div class="dash-wrap">
+    <div class="sidebar">
+      <div class="brand">🎟️ CampusEvents<br><small style="font-weight:400; opacity:0.7; font-size:12px;">Admin Panel</small></div>
+      <nav>
+        <a href="admin-dashboard.html" class="active">Dashboard</a>
+        <a href="manage-events.html">Manage Events</a>
+        <a href="add-event.html">Add Event</a>
+        <a href="users.html">Users</a>
+      </nav>
+      <a class="logout-link" onclick="logout()">Logout</a>
+    </div>
+
+    <div class="dash-main">
+      <h1>Admin Dashboard</h1>
+      <p style="color:var(--text-muted);">A quick overview of everything happening on the platform.</p>
+
+      <div class="stat-grid">
+        <div class="stat-card"><div class="num" id="stat-total-events">0</div><div class="label">Total Events</div></div>
+        <div class="stat-card amber"><div class="num" id="stat-total-users">0</div><div class="label">Registered Users</div></div>
+        <div class="stat-card teal"><div class="num" id="stat-total-regs">0</div><div class="label">Total Registrations</div></div>
+        <div class="stat-card"><div class="num" id="stat-upcoming">0</div><div class="label">Upcoming Events</div></div>
+      </div>
+
+      <div class="section-head">
+        <h2>Events Overview</h2>
+        <a href="manage-events.html" class="btn btn-outline-dark btn-small">Manage All →</a>
+      </div>
+      <table class="data-table">
+        <thead>
+          <tr><th>Event</th><th>Date</th><th>Category</th><th>Registrations</th></tr>
+        </thead>
+        <tbody id="recent-events-table"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <script src="../js/auth.js"></script>
+  <script src="../js/events.js"></script>
+  <script src="../js/admin.js"></script>
+  <script>
+    const session = requireRole('admin');
+    if (session) loadAdminDashboard();
+  </script>
+</body>
+</html>
